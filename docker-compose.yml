@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+
+  # Data Lake Database (stores raw API data)
+  lake_db:
+    image: postgres:15
+    container_name: retailco_lake
+    environment:
+      POSTGRES_USER: lake_user
+      POSTGRES_PASSWORD: lake_pass
+      POSTGRES_DB: lake
+    ports:
+      - "5433:5432"
+    volumes:
+      - lake_data:/var/lib/postgresql/data
+
+  # Data Warehouse Database (stores clean dimensional models)
+  warehouse_db:
+    image: postgres:15
+    container_name: retailco_warehouse
+    environment:
+      POSTGRES_USER: warehouse_user
+      POSTGRES_PASSWORD: warehouse_pass
+      POSTGRES_DB: warehouse
+    ports:
+      - "5434:5432"
+    volumes:
+      - warehouse_data:/var/lib/postgresql/data
+
+volumes:
+  lake_data:
+  warehouse_data:
+  
