@@ -1,0 +1,118 @@
+version: 2
+
+models:
+  - name: dim_date
+    description: "Date dimension covering 2022-2025"
+    columns:
+      - name: date_key
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_store
+    description: "Store dimension"
+    columns:
+      - name: store_key
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_employee
+    description: "Employee dimension"
+    columns:
+      - name: employee_key
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_payment_method
+    description: "Payment method dimension"
+    columns:
+      - name: payment_method_key
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_customer
+    description: "Customer dimension with SCD2 history"
+    columns:
+      - name: customer_key
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_product
+    description: "Product dimension with SCD2 history"
+    columns:
+      - name: product_key
+        tests:
+          - not_null
+          - unique
+
+  - name: fct_sales
+    description: "Sales fact table - one row per order line"
+    columns:
+      - name: sales_key
+        tests:
+          - not_null
+          - unique
+      - name: date_key
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: date_key
+      - name: customer_key
+        tests:
+          - relationships:
+              to: ref('dim_customer')
+              field: customer_key
+      - name: product_key
+        tests:
+          - relationships:
+              to: ref('dim_product')
+              field: product_key
+      - name: store_key
+        tests:
+          - relationships:
+              to: ref('dim_store')
+              field: store_key
+
+  - name: fct_payments
+    description: "Payments fact table - excludes flagged payments"
+    columns:
+      - name: payment_key
+        tests:
+          - not_null
+          - unique
+      - name: date_key
+        tests:
+          - relationships:
+              to: ref('dim_date')
+              field: date_key
+
+  - name: fct_inventory_daily
+    description: "Daily inventory snapshot per product per store"
+    columns:
+      - name: inventory_key
+        tests:
+          - not_null
+          - unique
+      - name: date_key
+        tests:
+          - relationships:
+              to: ref('dim_date')
+              field: date_key
+
+  - name: fct_order_lifecycle
+    description: "Order lifecycle accumulating snapshot"
+    columns:
+      - name: order_key
+        tests:
+          - not_null
+          - unique
+      - name: date_key
+        tests:
+          - relationships:
+              to: ref('dim_date')
+              field: date_key
