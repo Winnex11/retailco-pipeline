@@ -1,0 +1,74 @@
+version: 2
+
+models:
+  - name: stg_customers
+    description: "Staged customers from ERP API"
+    columns:
+      - name: customer_id
+        tests:
+          - not_null
+          - unique
+
+  - name: stg_products
+    description: "Staged products from ERP API"
+    columns:
+      - name: product_id
+        tests:
+          - not_null
+          - unique
+
+  - name: stg_stores
+    description: "Staged stores from ERP API"
+    columns:
+      - name: store_id
+        tests:
+          - not_null
+          - unique
+
+  - name: stg_employees
+    description: "Staged employees from ERP API"
+    columns:
+      - name: employee_id
+        tests:
+          - not_null
+          - unique
+
+  - name: stg_orders
+    description: "Staged orders from ERP API"
+    columns:
+      - name: order_id
+        tests:
+          - not_null
+          - unique
+
+  - name: stg_order_items
+    description: "Staged order items from ERP API"
+    columns:
+      - name: order_item_id
+        tests:
+          - not_null
+          - unique
+
+  - name: stg_payments
+    description: "Staged payments from ERP API"
+    columns:
+      - name: payment_id
+        tests:
+          - not_null
+          - unique
+
+  - name: stg_inventory_movements
+    description: "Staged inventory movements from ERP API"
+    columns:
+      - name: movement_id
+        tests:
+          - not_null
+          - unique
+
+  - name: stg_payment_methods
+    description: "Staged payment methods from ERP API"
+    columns:
+      - name: payment_method_id
+        tests:
+          - not_null
+          - unique
